@@ -1,0 +1,265 @@
+:root {
+  --bg: #f7f4ef;
+  --surface: #fffdf9;
+  --text: #1f2933;
+  --muted: #5f6c76;
+  --line: #d6d0c5;
+  --brand: #0f766e;
+  --brand-strong: #0a5f58;
+  --accent: #d97706;
+  --ok: #2f855a;
+  --warn: #c2410c;
+  --radius: 18px;
+  --shadow: 0 12px 28px rgba(16, 24, 40, 0.08);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Manrope", "Segoe UI", sans-serif;
+  color: var(--text);
+  background: radial-gradient(circle at 20% 20%, #efe5d4 0%, transparent 35%),
+    radial-gradient(circle at 80% 10%, #dbece8 0%, transparent 30%),
+    var(--bg);
+  min-height: 100vh;
+}
+
+.bg-grid {
+  position: fixed;
+  inset: 0;
+  background-image: linear-gradient(to right, rgba(31, 41, 51, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(31, 41, 51, 0.04) 1px, transparent 1px);
+  background-size: 28px 28px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.bg-glow {
+  position: fixed;
+  width: 320px;
+  height: 320px;
+  border-radius: 999px;
+  filter: blur(50px);
+  opacity: 0.4;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.bg-glow-left {
+  background: #f59e0b;
+  left: -80px;
+  bottom: -80px;
+}
+
+.bg-glow-right {
+  background: #14b8a6;
+  right: -80px;
+  top: -80px;
+}
+
+.page {
+  position: relative;
+  z-index: 1;
+  max-width: 1050px;
+  margin: 0 auto;
+  padding: 2.2rem 1rem 2.8rem;
+}
+
+.hero {
+  background: linear-gradient(135deg, rgba(255, 253, 249, 0.94), rgba(252, 244, 231, 0.9));
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 1.6rem;
+}
+
+.eyebrow {
+  font-family: "Sora", sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+  font-size: 0.75rem;
+  margin: 0 0 0.5rem;
+}
+
+h1,
+h2 {
+  font-family: "Sora", sans-serif;
+  margin: 0;
+}
+
+h1 {
+  font-size: clamp(1.5rem, 2vw + 1rem, 2.3rem);
+}
+
+h2 {
+  font-size: 1.15rem;
+  margin-bottom: 0.65rem;
+}
+
+.subtitle {
+  color: var(--muted);
+  margin: 0.8rem 0 0;
+  line-height: 1.5;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+.panel {
+  margin-top: 1rem;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 1rem;
+}
+
+.panel-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.label {
+  display: block;
+  margin: 0.65rem 0 0.45rem;
+  font-weight: 600;
+}
+
+.muted {
+  color: var(--muted);
+  margin-top: 0;
+}
+
+.input,
+.textarea,
+.input-file {
+  width: 100%;
+  border: 1px solid #c6c0b3;
+  border-radius: 12px;
+  background: #fff;
+  color: var(--text);
+  padding: 0.7rem 0.85rem;
+  font: inherit;
+}
+
+.textarea {
+  resize: vertical;
+  min-height: 130px;
+  line-height: 1.45;
+}
+
+.btn {
+  border: none;
+  border-radius: 12px;
+  padding: 0.7rem 1rem;
+  font-family: "Sora", sans-serif;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.18s ease, filter 0.18s ease;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.03);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+.btn-primary {
+  margin-top: 0.75rem;
+  width: 100%;
+  background: linear-gradient(135deg, var(--brand), #0f9f96);
+  color: #f9fffe;
+}
+
+.btn-secondary {
+  background: #ece6da;
+  color: #3b4450;
+}
+
+.status-pill {
+  margin: 0.75rem 0 0;
+  display: inline-block;
+  border-radius: 999px;
+  padding: 0.42rem 0.75rem;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.status-neutral {
+  background: #ebe6dc;
+  color: #5a6571;
+}
+
+.status-ok {
+  background: #d7f5e1;
+  color: #236641;
+}
+
+.status-error {
+  background: #ffe1d6;
+  color: #9f3412;
+}
+
+.result-box,
+.answer-box {
+  margin-top: 0.75rem;
+  border: 1px dashed #c7bfb1;
+  border-radius: 12px;
+  background: #fffcf7;
+  padding: 0.8rem;
+  min-height: 56px;
+  line-height: 1.45;
+  white-space: pre-wrap;
+}
+
+.sources-list {
+  margin: 0;
+  padding-left: 1.1rem;
+}
+
+.sources-list li {
+  margin: 0.5rem 0;
+  line-height: 1.4;
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(8px);
+  animation: riseIn 0.55s ease forwards;
+}
+
+.delay-1 { animation-delay: 80ms; }
+.delay-2 { animation-delay: 150ms; }
+.delay-3 { animation-delay: 220ms; }
+.delay-4 { animation-delay: 290ms; }
+.delay-5 { animation-delay: 360ms; }
+
+@keyframes riseIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (min-width: 860px) {
+  .page {
+    padding: 2.7rem 1.2rem 3.4rem;
+  }
+
+  .grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}

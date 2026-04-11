@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RAG Document Assistant</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Sora:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="icon" href="/favicon.ico" />
+  </head>
+  <body>
+    <div class="bg-grid" aria-hidden="true"></div>
+    <div class="bg-glow bg-glow-left" aria-hidden="true"></div>
+    <div class="bg-glow bg-glow-right" aria-hidden="true"></div>
+
+    <main class="page">
+      <header class="hero reveal">
+        <p class="eyebrow">Resume Project Demo</p>
+        <h1>RAG-Based Intelligent Document Assistant</h1>
+        <p class="subtitle">
+          Upload a PDF, ask a question, and get a context-grounded answer from your own documents.
+        </p>
+      </header>
+
+      <section class="panel reveal delay-1" aria-labelledby="api-config-title">
+        <div class="panel-head">
+          <h2 id="api-config-title">API Connection</h2>
+          <button id="statusBtn" class="btn btn-secondary" type="button">Check Status</button>
+        </div>
+        <label for="apiBaseUrl" class="label">Backend URL</label>
+        <input id="apiBaseUrl" class="input" type="url" value="http://127.0.0.1:8000" />
+        <p id="statusText" class="status-pill status-neutral">Status not checked</p>
+      </section>
+
+      <section class="grid">
+        <article class="panel reveal delay-2" aria-labelledby="upload-title">
+          <h2 id="upload-title">1. Upload PDF</h2>
+          <p class="muted">Supported file type: PDF</p>
+          <input id="pdfFileInput" class="input-file" type="file" accept=".pdf,application/pdf" />
+          <button id="uploadBtn" class="btn btn-primary" type="button">Upload and Index</button>
+          <div id="uploadResult" class="result-box" aria-live="polite"></div>
+        </article>
+
+        <article class="panel reveal delay-3" aria-labelledby="query-title">
+          <h2 id="query-title">2. Ask Question</h2>
+          <label for="questionInput" class="label">Your question</label>
+          <textarea
+            id="questionInput"
+            class="textarea"
+            rows="5"
+            placeholder="Example: What are the key findings in this document?"
+          ></textarea>
+          <button id="askBtn" class="btn btn-primary" type="button">Get Answer</button>
+        </article>
+      </section>
+
+      <section class="panel reveal delay-4" aria-labelledby="answer-title">
+        <h2 id="answer-title">Answer</h2>
+        <div id="answerBox" class="answer-box">Your answer will appear here.</div>
+      </section>
+
+      <section class="panel reveal delay-5" aria-labelledby="sources-title">
+        <h2 id="sources-title">Retrieved Sources</h2>
+        <ul id="sourcesList" class="sources-list"></ul>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>
