@@ -47,12 +47,12 @@ class RAGPipeline:
 		source = source_name or path.name
 		return self._ingest_text(text=text, source_name=source)
 
-	def ingest_pdf_bytes(self, pdf_bytes: bytes, source_name: str) -> dict[str, Any]:
+	def ingest_pdf_bytes(self, pdf_bytes: bytes, source_name: str, replace_existing: bool = False) -> dict[str, Any]:
 		"""Ingest a PDF represented as bytes into the vector store."""
 		if not source_name:
 			raise RAGPipelineError("source_name is required when ingesting PDF bytes.")
 		text = extract_text_from_pdf_bytes(pdf_bytes)
-		return self._ingest_text(text=text, source_name=source_name)
+		return self._ingest_text(text=text, source_name=source_name, replace_existing=replace_existing)
 
 	def answer_question(self, question: str, top_k: int | None = None) -> RetrievalResult:
 		"""Retrieve relevant chunks and generate an answer for the question."""
@@ -100,7 +100,10 @@ class RAGPipeline:
 			"metadata_path": str(self.settings.faiss_metadata_path),
 		}
 
-	def _ingest_text(self, text: str, source_name: str) -> dict[str, Any]:
+	def _ingest_text(self, text: str, source_name: str, replace_existing: bool = False) -> dict[str, Any]:
+		if replace_existing:
+			self.vectorstore.clear(delete_from_disk=True)
+
 		chunks = chunk_text(
 			text=text,
 			chunk_size=self.settings.chunk_size,
@@ -117,6 +120,7 @@ class RAGPipeline:
 
 		return {
 			"source": source_name,
+			"index_mode": "replaced" if replace_existing else "appended",
 			"chunks_created": len(chunks),
 			"vectors_added": added_count,
 			"total_vectors": self.vectorstore.size,

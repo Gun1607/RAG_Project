@@ -38,8 +38,8 @@ class Settings(BaseSettings):
 
 	retrieval_top_k: int = 4
 
-	openai_api_key: str | None = None
-	openai_model: str = "gpt-4o-mini"
+	gemini_api_key: str | None = None
+	gemini_model: str = "gemini-flash-latest"
 
 
 @lru_cache(maxsize=1)

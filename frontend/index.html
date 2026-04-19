@@ -20,7 +20,7 @@
 
     <main class="page">
       <header class="hero reveal">
-        <p class="eyebrow">Resume Project Demo</p>
+        <p class="eyebrow">Hallucination Free!</p>
         <h1>RAG-Based Intelligent Document Assistant</h1>
         <p class="subtitle">
           Upload a PDF, ask a question, and get a context-grounded answer from your own documents.
@@ -42,6 +42,10 @@
           <h2 id="upload-title">1. Upload PDF</h2>
           <p class="muted">Supported file type: PDF</p>
           <input id="pdfFileInput" class="input-file" type="file" accept=".pdf,application/pdf" />
+          <label class="checkbox-row" for="replaceExisting">
+            <input id="replaceExisting" type="checkbox" />
+            <span>Start new knowledge base by clearing previously indexed documents</span>
+          </label>
           <button id="uploadBtn" class="btn btn-primary" type="button">Upload and Index</button>
           <div id="uploadResult" class="result-box" aria-live="polite"></div>
         </article>
@@ -70,6 +74,6 @@
       </section>
     </main>
 
-    <script src="app.js"></script>
+    <script src="app.js?v=3"></script>
   </body>
 </html>

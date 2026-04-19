@@ -1,7 +1,7 @@
 from pathlib import Path
 from uuid import uuid4
 
-from fastapi import APIRouter, File, HTTPException, UploadFile, status
+from fastapi import APIRouter, File, Form, HTTPException, UploadFile, status
 
 from app.core.config import get_settings
 from app.models.schemas import ErrorResponse, UploadResponse
@@ -41,7 +41,10 @@ def _validate_pdf_file(file: UploadFile, payload_size: int) -> None:
 	response_model=UploadResponse,
 	responses={400: {"model": ErrorResponse}, 413: {"model": ErrorResponse}, 500: {"model": ErrorResponse}},
 )
-async def upload_document(file: UploadFile = File(...)) -> UploadResponse:
+async def upload_document(
+	file: UploadFile = File(...),
+	replace_existing: bool = Form(default=False),
+) -> UploadResponse:
 	"""Upload and ingest a PDF document into the FAISS vector store."""
 	try:
 		file_bytes = await file.read()
@@ -55,14 +58,19 @@ async def upload_document(file: UploadFile = File(...)) -> UploadResponse:
 		output_path.write_bytes(file_bytes)
 
 		try:
-			result = get_rag_pipeline().ingest_pdf_bytes(pdf_bytes=file_bytes, source_name=stored_name)
+			result = get_rag_pipeline().ingest_pdf_bytes(
+				pdf_bytes=file_bytes,
+				source_name=stored_name,
+				replace_existing=replace_existing,
+			)
 		except RAGPipelineError as exc:
 			raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(exc)) from exc
 
 		return UploadResponse(
-			message="Document uploaded and indexed successfully.",
+			message="Document uploaded and indexed successfully." if not replace_existing else "Document uploaded and indexed successfully after clearing previous documents.",
 			filename=stored_name,
 			source=result["source"],
+			index_mode=result["index_mode"],
 			chunks_created=result["chunks_created"],
 			vectors_added=result["vectors_added"],
 			total_vectors=result["total_vectors"],

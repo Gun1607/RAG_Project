@@ -152,6 +152,20 @@ h2 {
   font: inherit;
 }
 
+.checkbox-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  margin-top: 0.8rem;
+  color: var(--text);
+  line-height: 1.4;
+}
+
+.checkbox-row input {
+  margin-top: 0.2rem;
+  accent-color: var(--brand);
+}
+
 .textarea {
   resize: vertical;
   min-height: 130px;

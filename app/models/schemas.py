@@ -5,6 +5,7 @@ class UploadResponse(BaseModel):
 	message: str = Field(..., description="Human-readable ingestion status message")
 	filename: str = Field(..., description="Stored filename for the uploaded PDF")
 	source: str = Field(..., description="Source identifier used in vector metadata")
+	index_mode: str = Field(..., description="Whether the upload replaced the existing index or appended to it")
 	chunks_created: int = Field(..., ge=0)
 	vectors_added: int = Field(..., ge=0)
 	total_vectors: int = Field(..., ge=0)

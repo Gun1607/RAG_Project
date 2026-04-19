@@ -36,9 +36,10 @@ class FakePipeline:
             ],
         )
 
-    def ingest_pdf_bytes(self, pdf_bytes: bytes, source_name: str) -> dict:
+    def ingest_pdf_bytes(self, pdf_bytes: bytes, source_name: str, replace_existing: bool = False) -> dict:
         return {
             "source": source_name,
+            "index_mode": "replaced" if replace_existing else "appended",
             "chunks_created": 2,
             "vectors_added": 2,
             "total_vectors": 10,
@@ -107,7 +108,19 @@ def test_upload_endpoint_accepts_pdf(monkeypatch) -> None:
     assert response.status_code == 200
     body = response.json()
     assert body["message"] == "Document uploaded and indexed successfully."
+    assert body["index_mode"] == "appended"
     assert body["vectors_added"] == 2
+
+
+def test_upload_endpoint_can_replace_existing_index(monkeypatch) -> None:
+    client = _build_test_client()
+    files = {"file": ("sample.pdf", b"%PDF-1.4 fake pdf bytes", "application/pdf")}
+    response = client.post("/api/upload", files=files, data={"replace_existing": "true"})
+
+    assert response.status_code == 200
+    body = response.json()
+    assert body["message"] == "Document uploaded and indexed successfully after clearing previous documents."
+    assert body["index_mode"] == "replaced"
 
 
 def test_upload_endpoint_rejects_non_pdf() -> None:
